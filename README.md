@@ -12,5 +12,6 @@ Ini adalah repository untuk assignment Product Operationalization & VCS. Pada tu
 * `/typeMember` return count of member for each member
 * `/bestSeasonalAnime/{year}/{season}` return top 3 anime for specific season in a year (season option: winter, spring, summer, fall)
 * `/recommendation/{tipe}/{year}/{min_score}` return recommendation based on type, year, and minimum score
-Untuk menampilkan 3 anime terbaik untuk season tertentu pada tahun tertentu, contohnya `/bestSeasonalAnime/2020/winter`. <br>
+Untuk menampilkan 3 anime terbaik untuk season tertentu pada tahun tertentu, contohnya `/bestSeasonalAnime/2020/winter`.
+
 Adapun untuk menampilkan rekomendasi anime berdasarkan tipe (TV, Movie, Special, OVA, ONA, Music), tahun, dan rating minimum, contohnya `/recommendation/Movie/2017/8.5`.
