@@ -19,6 +19,22 @@ df['release_year'] = df['start_date'].apply(lambda x: x[-4:]).astype(int)
 # Halaman awal API dan penjelasan endpoints
 @app.get("/")
 def read_root():
+    """
+    API MyAnimeList from Jikan API
+    ------------------------------
+    Ini adalah repository untuk assignment Product Operationalization & VCS. Pada tugas ini, saya mengambil data dari API Jikan (https://jikan.moe/) kemudian melakukan analisis sederhana sebagai API di https://fastapi-carlo.herokuapp.com/. Berikut adalah beberapa endpoints yang saya buat.
+    `/topAnime` return top 10 anime
+    `/topMember` return top 10 anime (based on members count)
+    `/typeScore` return average score for each type
+    `/yearScore` return average score for each year
+    `/typeCount` return count of anime for each type
+    `/typeMember` return count of member for each member
+    `/bestSeasonalAnime/{year}/{season}` return top 3 anime for specific season in a year (season option: winter, spring, summer, fall)
+    `/recommendation/{tipe}/{year}/{min_score}` return recommendation based on type, year, and minimum score
+    Untuk menampilkan 3 anime terbaik untuk season tertentu pada tahun tertentu, contohnya `/bestSeasonalAnime/2020/winter`.
+    
+    Adapun untuk menampilkan rekomendasi anime berdasarkan tipe (TV, Movie, Special, OVA, ONA, Music), tahun, dan rating minimum, contohnya `/recommendation/Movie/2017/8.5`.
+    """
     return {"title":"MyAnimeList Unofficial API (Jikan)",
             "message":"please read endpoint instructions",
             "endpoints":{
@@ -92,6 +108,16 @@ def read_typeMember():
 # Endpoint untuk menampilkan 3 anime terbaik pada season dan tahun tertentu
 @app.get("/bestSeasonalAnime/{year}/{season}")
 def read_bestSeasonalAnime(year: int, season: str):
+    """
+    Endpoint untuk menampilkan 3 anime terbaik pada season dan tahun tertentu
+    
+    Parameters
+    ----------
+    year : int
+        Tahun yang ingin ditampilkan
+    season : str
+        Season yang ingin ditampilkan ('winter', 'fall', 'spring', 'summer')
+    """
     seasonal = []
     url_season = 'https://api.jikan.moe/v3/season/{}/{}'.format(year, season)
     response_season = urlopen(url_season)
@@ -105,6 +131,18 @@ def read_bestSeasonalAnime(year: int, season: str):
 # Endpoint untuk mendapatkan rekomendasi anime berdasarkan tahun, tipe, dan score minimal
 @app.get("/recommendation/{tipe}/{year}/{min_score}")
 async def read_recommendation(tipe: str, year: int, min_score: float):
+    """
+    Endpoint untuk mendapatkan rekomendasi anime berdasarkan tahun, tipe, dan score minimal
+    
+    Parameters
+    ----------
+    tipe : str
+        Tipe anime yang dicari ('TV', 'Movie', 'Special', 'OVA', 'ONA', 'Music')
+    year : int
+        Tahun yang ingin ditampilkan
+    min_score : float
+        Minimal score yang ingin diatur
+    """
     col = ['rank', 'title', 'members', 'score', 'release_year', 'url']
     result = df[col][(df.type == tipe) & (df.release_year >= year) & (df.score >= min_score)].sort_values(by='score', ascending=False)
     return result.to_dict(orient='records')
