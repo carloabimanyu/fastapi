@@ -1,8 +1,5 @@
 # FastAPI
 
-Nama: Carlo Abimanyu <br>
-NPK: 67660 <br>
-
 Ini adalah repository untuk assignment Product Operationalization & VCS. Pada tugas ini, saya mengambil data dari API Jikan (https://jikan.moe/) kemudian melakukan analisis sederhana sebagai API di https://fastapi-carlo.herokuapp.com/. Berikut adalah beberapa endpoints yang saya buat.
 * `/topAnime` return top 10 anime
 * `/topMember` return top 10 anime (based on members count)
